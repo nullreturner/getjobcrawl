@@ -1,5 +1,3 @@
-import os
-os.system('cls')
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from bs4 import element
@@ -8,17 +6,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from pprint import pprint
+import time
 
 def main():
     chromeOptions = Options()
     chromeOptions.add_argument('headless')
-    driver = webdriver.Chrome(options=chromeOptions)
+    driver = webdriver.Chrome('/Users/yoonsung0711/git/getjobcrawl/chromedriver', options=chromeOptions)
 
     driver.get('https://www.rocketpunch.com/jobs?job=sw-developer')
     # WebDriverWait(driver, 10).until(expected_conditions.presence_of_element_located((By.ID, 'fb-root')))
+    time.sleep(1)
 
     companies = []
     for item in BeautifulSoup(driver.page_source, 'html.parser').find_all(attrs={'class': 'company item'}):
+        time.sleep(1)
         company = {}
         companyName = item.find(attrs={'class': 'header name'}) \
                     .find(lambda x : 
